@@ -8,8 +8,6 @@ import java.util.List;
 import com.example.springboot.dto.BranchDTO;
 import com.example.springboot.repository.BranchRepository;
 
-
-
 @Service
 public class BranchServiceImpl implements BranchService {
 
