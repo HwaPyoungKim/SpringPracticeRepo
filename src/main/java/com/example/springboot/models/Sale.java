@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.ArrayList;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
@@ -21,8 +23,12 @@ public class Sale {
   private Long id;
   private LocalDate date;
   private String state;
+  private Double totalAmount;
 
   @ManyToOne
   private Branch branch;
+
+  @OneToMany(mappedBy = "sale")
+  private List<SaleDetail> details = new ArrayList<>();
 
 }

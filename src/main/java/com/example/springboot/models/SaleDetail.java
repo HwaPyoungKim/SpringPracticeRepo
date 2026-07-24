@@ -26,4 +26,5 @@ public class SaleDetail {
   
   private Integer quantity;
   private Double price;
+  private Double partialAmount;
 }
