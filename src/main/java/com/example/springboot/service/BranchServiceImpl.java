@@ -16,31 +16,38 @@ public class BranchServiceImpl implements BranchService {
 
   @Override
   public List<BranchDTO> getAllBranches() {
-    // Implementation for retrieving all branches
-    return null;
+    return branchRepository.findAll().stream().map(Mapper::toDTO).toList();
   }
 
   @Override
   public BranchDTO getBranchById(Long id) {
-    // Implementation for retrieving a branch by ID
-    return null;
+    return branchRepository.findById(id).map(Mapper::toDTO)
+    .orElseThrow(() -> new NotFoundException("Branch not found with id: " + id));
   }
 
   @Override
   public BranchDTO createBranch(BranchDTO branchDTO) {
-    // Implementation for creating a new branch
-    return null;
+    Branch branch = Branch.builder()
+        .name(branchDTO.getName())
+        .address(branchDTO.getAddress())
+        .build();
+    return Mapper.toDTO(branchRepository.save(branch));
   }
 
   @Override
   public BranchDTO updateBranch(Long id, BranchDTO branchDTO) {
-    // Implementation for updating an existing branch
-    return null;
+    Branch branch = branchRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException("Branch not found with id: " + id));
+    branch.setName(branchDTO.getName());
+    branch.setAddress(branchDTO.getAddress());
+    return Mapper.toDTO(branchRepository.save(branch));
   }
 
   @Override
   public void deleteBranch(Long id) {
-    // Implementation for deleting a branch
+    if(!branchRepository.existsById(id)) {
+      throw new NotFoundException("Branch not found with id: " + id);
+    }
+    branchRepository.deleteById(id);
   } 
-
 }
